@@ -1,0 +1,62 @@
+apply plugin: 'com.android.application'
+
+android {
+    compileSdkVersion 23
+    buildToolsVersion "23.0.3"
+
+    defaultConfig {
+        applicationId "com.demo.testpackage"
+        minSdkVersion 16
+        targetSdkVersion 23
+        versionCode 1
+        versionName "1.0"
+    }
+
+    signingConfigs {
+        debug {
+            storeFile file(project.SIGNINGCONFIGS_STORE_FILE)
+            storePassword project.SIGNINGCONFIGS_STORE_PASSWORD
+            keyAlias project.SIGNINGCONFIGS_KEY_ALIAS
+            keyPassword SIGNINGCONFIGS_KEY_PASSWORD
+        }
+        release {
+            storeFile file(project.SIGNINGCONFIGS_STORE_FILE)
+            storePassword project.SIGNINGCONFIGS_STORE_PASSWORD
+            keyAlias project.SIGNINGCONFIGS_KEY_ALIAS
+            keyPassword SIGNINGCONFIGS_KEY_PASSWORD
+        }
+    }
+    buildTypes {
+        release {
+            signingConfig signingConfigs.release
+            minifyEnabled true
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+
+
+    productFlavors {
+        myapk{
+            //指定一些参数
+            signingConfig signingConfigs.release
+            minSdkVersion 15
+            applicationId 'com.qq.test'
+            targetSdkVersion 21
+        }
+        xiaomi {}
+        qihu360 {}
+        baidu {}
+        wandoujia {}
+    }
+
+
+    productFlavors.all {
+        flavor -> flavor.manifestPlaceholders = [CHANNEL_VALUE: name]
+    }
+}
+
+dependencies {
+    compile fileTree(include: ['*.jar'], dir: 'libs')
+    testCompile 'junit:junit:4.12'
+    compile 'com.android.support:appcompat-v7:23.3.0'
+}
