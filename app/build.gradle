@@ -40,10 +40,15 @@ android {
             //指定一些参数
             signingConfig signingConfigs.release
             minSdkVersion 15
-            applicationId 'com.qq.test'
+            //applicationId 追加
+            applicationIdSuffix ".release"
             targetSdkVersion 21
+            // 这里的参数是为了在 java 代码中使用，具体的使用方式为：context.getResources().getString(R.string.strKey);
+            resValue("string" , "strKey","releaseStrValue")
         }
-        xiaomi {}
+        xiaomi {
+            applicationIdSuffix ".xiaomi"
+        }
         qihu360 {}
         baidu {}
         wandoujia {}
